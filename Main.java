@@ -9,6 +9,8 @@ public class Main {
         Human human2 = new Human("Мария", "Иванова", Gender.Female);
         Human human3 = new Human("Ольга", "Иванова", Gender.Female);
 
+        System.out.println(family1.getInfo());
+
 
 
     }
