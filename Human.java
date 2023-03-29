@@ -47,7 +47,7 @@ public class Human {
         return this.surname;
     }
 
-    public LocalDate getDateBirth() {
+    public String getDateBirth() {
         return this.dateBirth;
     }
 
