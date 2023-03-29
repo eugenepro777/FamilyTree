@@ -2,15 +2,14 @@ package FamilyTree;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Human {
     private String name;
     private String surname;
-    private LocalDate dateBirth;
+    private String dateBirth;
 
     Gender gender;
     Human father;
@@ -18,13 +17,13 @@ public class Human {
 
     List<Human> childList;
 
-    public Human(String name, String surname, LocalDate dateBirth, Gender gender, Human father, List<Human> childList) {
+    public Human(String name, String surname, String dateBirth, Gender gender, Human father) {
         this.name = name;
         this.surname = surname;
         this.dateBirth = dateBirth;
         this.gender = gender;
         this.father = father;
-        this.childList = childList;
+        //this.childList = childList;
     }
 
     public Human(String name, String surname, Gender gender) {
@@ -32,8 +31,6 @@ public class Human {
         this.surname = surname;
         this.gender = gender;
     }
-
-
 
 
     public Human(String name, String surname) {
@@ -55,7 +52,7 @@ public class Human {
     }
 
     public List<Human> getChildList() {
-        return childList;
+        return childList = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -66,19 +63,20 @@ public class Human {
         this.surname = surname;
     }
 
-    public void setDateBirth(LocalDate dateBirth) {
+    public void setDateBirth(String dateBirth) {
         this.dateBirth = dateBirth;
     }
 
+
     public void setFather(Human father) {
         this.father = father;
-        father.addChild(this);
     }
 
     public void setMother(Human mother) {
         this.mother = mother;
-        mother.addChild(this);
     }
+
+
 
     public void addChild(String name, String surname) {
         Human child = new Human(name, surname);
@@ -86,27 +84,62 @@ public class Human {
         this.childList.add(child);
     }
 
-    public void addChild(Human child) {
-        child.setFather(this);
-        this.childList.add(child);
+    public void addChild(Human human) {
+        this.childList.add(human);
     }
 
+    public String getChild() {
+        System.out.println("*".repeat(30));
+        StringBuilder child = new StringBuilder(getName() + " " + getSurname() + " дети: \n");
+        for (Human human: this.childList) {
+            child.append(human + "\n");
+        }
+        return child.toString();
+    }
+
+    public int getAge(String dateBirth) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
+        LocalDate currentDate = LocalDate.now();
+        LocalDate date = LocalDate.parse(dateBirth, formatter);
+        return Period.between(date, currentDate).getYears();
+
+    }
+
+    @Override
+    public String toString() {
+        return "Имя: " + this.name + " " +
+                "Фамилия: " + this.surname + " " + "Отец " + father;
+    }
+
+//    public void addChild(Human child) {
+//        child.setFather(this);
+//        this.childList.add(child);
+
+//    }
 //    public void getChildList(String name) {
 //        for (Human item:
 //             childList) {
 //            if (human.get)
 //        }
 //       // return childList;
+
+//    }
+//    SimpleDateFormat dayFormat = new SimpleDateFormat("EEE, d MMMM", Locale.getDefault());
+//    private Calendar calendar;
+//
+//    String myString = dayFormat.format(calendar.getTime());
+
+    //    public void setFather(Human father) {
+//        this.father = father;
+//        father.addChild(this);
+//    }
+//
+//    public void setMother(Human mother) {
+//        this.mother = mother;
+//        mother.addChild(this);
 //    }
 
-    @Override
-    public String toString() {
-        return "Имя: " + this.name + " " + "Фамилия: " + this.surname + " " + "Отец " + father;
-    }
-    SimpleDateFormat dayFormat = new SimpleDateFormat("EEE, d MMMM", Locale.getDefault());
-    private Calendar calendar;
 
-    String myString = dayFormat.format(calendar.getTime());
     //    public Gender getGender() {
 //        return gender;
 //    }

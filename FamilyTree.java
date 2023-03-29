@@ -14,6 +14,10 @@ public class FamilyTree {
         writable.save(this);
     }
 
+    public List<Human> getHumanList() {
+        return humanList;
+    }
+
     public FamilyTree() {
         this.humanList = new ArrayList<>();
     }
