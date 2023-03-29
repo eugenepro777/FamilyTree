@@ -117,8 +117,9 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Имя: " + this.name + " " +
-                "Фамилия: " + this.surname + " " + "Отец " + father;
+        return this.name +  " " + this.surname + " " +
+                "Пол: " + gender.name() + " " +
+                "Возраст: " + getAge(dateBirth) + " лет " + "\n" + "Отец: " + father;
     }
 
 //    public void addChild(Human child) {
