@@ -17,12 +17,21 @@ public class Human {
 
     List<Human> childList;
 
-    public Human(String name, String surname, String dateBirth, Gender gender, Human father) {
+//    public Human(String name, String surname, Gender gender, String dateBirth, Human father) {
+//        this.name = name;
+//        this.surname = surname;
+//        this.dateBirth = dateBirth;
+//        this.gender = gender;
+//        this.father = father;
+//        //this.childList = childList;
+//    }
+
+    public Human(String name, String surname, Gender gender, String dateBirth) {
         this.name = name;
         this.surname = surname;
         this.dateBirth = dateBirth;
         this.gender = gender;
-        this.father = father;
+        //this.father = father;
         //this.childList = childList;
     }
 
@@ -85,6 +94,7 @@ public class Human {
     }
 
     public void addChild(Human human) {
+        childList = new ArrayList<>();
         this.childList.add(human);
     }
 
