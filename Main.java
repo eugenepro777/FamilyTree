@@ -15,8 +15,6 @@ public class Main {
         human3.setMother(human2);
         human1.addChild(human3);
         human2.addChild(human3);
-//        human1.childList.add(human3);
-//        human2.childList.add(human3);
 
 
         FamilyTree family2 = new FamilyTree();
