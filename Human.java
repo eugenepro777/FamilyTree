@@ -10,10 +10,11 @@ public class Human {
     private String name;
     private String surname;
     private String dateBirth;
+    //не забываем про инкапсуляцию. Поля почти всегда private - сделал
 
-    Gender gender;
-    Human father;
-    Human mother;
+    private Gender gender;
+    private Human father;
+    private Human mother;
 
     List<Human> childList;
 
@@ -87,11 +88,13 @@ public class Human {
 
 
 
-    public void addChild(String name, String surname) {
-        Human child = new Human(name, surname);
-        child.setFather(this);
-        this.childList.add(child);
-    }
+//    public void addChild(String name, String surname) {
+//        Human child = new Human(name, surname);
+//        child.setFather(this);
+//        this.childList.add(child);
+//    }
+
+    //не хватает метода addChild  - добавил
 
     public void addChild(Human human) {
         childList = new ArrayList<>();
@@ -120,6 +123,10 @@ public class Human {
         return this.name +  " " + this.surname + " " +
                 "Пол: " + gender.name() + " " +
                 "Возраст: " + getAge(dateBirth) + " лет " + "\n" + "Отец: " + father;
+    }
+
+    public Human getMother() {
+        return this.mother;
     }
 
 //    public void addChild(Human child) {
