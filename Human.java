@@ -46,6 +46,12 @@ public class Human implements Serializable {
         this.surname = surname;
     }
 
+    public Human() {
+        this.name = "unknow";
+        this.surname = "unknow";
+        this.dateBirth = "unknow";
+    }
+
     public String getName() {
         return name;
     }
