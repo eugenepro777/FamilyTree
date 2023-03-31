@@ -30,7 +30,7 @@ public class Main {
         human6.setMother(human5); human7.setMother(human5);
         human4.addChild(human6); human4.addChild(human7);
         human5.addChild(human6); human5.addChild(human7);
-        //human5.childList.add(human6); human5.childList.add(human7);
+
 
         System.out.println(human1.getChild());
         System.out.println(human2.getChild());

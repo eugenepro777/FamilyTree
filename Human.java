@@ -21,6 +21,8 @@ public class Human implements Serializable {
     private Human lifeCompanion;
     private String maidenName;
 
+    private String dateDeath;
+
     private FamilyConnect connect;
 
     private final String nameRegex = "^[\\p{L} .'-]+$";
@@ -35,12 +37,7 @@ public class Human implements Serializable {
         this.mother = null;
         this.lifeCompanion = null;
         this.maidenName = "";
-    }
-
-    public Human(String name, String surname, Gender gender) {
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
+        this.childList = new ArrayList<>();
     }
 
 
@@ -49,36 +46,63 @@ public class Human implements Serializable {
         this.surname = surname;
     }
 
-    public Human() {
-
-    }
-
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getSurname() {
-        return this.surname;
+        return surname;
     }
 
     public String getDateBirth() {
-        return this.dateBirth;
+        return dateBirth;
     }
 
     public List<Human> getChildList() {
         return childList = new ArrayList<>();
     }
 
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
     public void setName(String name) {
-        this.name = name;
+        if (name.isEmpty()) {
+            System.out.println("Поле не должно быть пустым");
+        } else {
+            this.name = name;
+        }
     }
+
+//    public void setSurname(String surname) {
+//        this.surname = surname;
+//    }
+
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        if (surname.isEmpty()) {
+            System.out.println("Поле не должно быть пустым");
+        } else {
+            this.surname = surname;
+        }
     }
 
+//    public void setDateBirth(String dateBirth) {
+//        this.dateBirth = dateBirth;
+//    }
+
     public void setDateBirth(String dateBirth) {
-        this.dateBirth = dateBirth;
+        if (dateBirth.isEmpty()) {
+            System.out.println("Поле не должно быть пустым");
+        } else {
+            this.dateBirth = dateBirth;
+        }
+    } public void setDateDeath(String dateDeath) {
+        if (dateDeath.isEmpty()) {
+            System.out.println("Поле не должно быть пустым");
+        } else {
+            this.dateDeath = dateDeath;
+        }
     }
 
 
@@ -137,7 +161,7 @@ public class Human implements Serializable {
     }
 
     public String getMaidenName() {
-        return maidenName;
+        return this.maidenName;
     }
 
     public final void setNameRegex(String name) {
@@ -200,18 +224,10 @@ public class Human implements Serializable {
 
 
 
-
-
-    //    public void addChild(String name, String surname) {
-//        Human child = new Human(name, surname);
-//        child.setFather(this);
-//        this.childList.add(child);
-//    }
-
-    //не хватает метода addChild  - добавил
-    public void addChild(Human human) {
+    //не хватает метода addChild - добавил
+    public void addChild(Human child) {
         childList = new ArrayList<>();
-        this.childList.add(human);
+        this.childList.add(child);
     }
 
     public String getChild() {
@@ -246,6 +262,12 @@ public class Human implements Serializable {
         return father;
     }
 
+    //    public void addChild(String name, String surname) {
+//        Human child = new Human(name, surname);
+//        child.setFather(this);
+//        this.childList.add(child);
+//    }
+
 //    public void addChild(Human child) {
 //        child.setFather(this);
 //        this.childList.add(child);
@@ -275,16 +297,6 @@ public class Human implements Serializable {
 //    }
 
 
-    //    public Gender getGender() {
-//        return gender;
-//    }
-//
-//    public FamilyTree.Human getFather() {
-//        return father;
-//    }
-//
-//    public FamilyTree.Human getMother() {
-//        return mother;
 
-//    }
+
 }
