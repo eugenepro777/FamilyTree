@@ -1,9 +1,7 @@
 package FamilyTree;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import javax.imageio.IIOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -292,24 +290,46 @@ public class Human implements Writable {
     }
 
     @Override
-    public void writeObject(ObjectOutputStream stream) {
-        try {
-            stream.defaultWriteObject();
-            System.out.println("Записано");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void save(Writable serializable) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream("out.txt");
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(serializable);
+        }
+        catch (IIOException ex) {
+            ex.printStackTrace(System.out);
         }
     }
 
     @Override
-    public void readObject(ObjectInputStream stream) {
-        try {
-            stream.defaultReadObject();
-            System.out.println("Загружено");
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    public Writable load() throws ClassNotFoundException, InvalidObjectException {
+        try (FileInputStream fis = new FileInputStream("out.txt");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            Writable object = (Human) ois.readObject();
+            return object;
+        } catch (IOException ex) {
+            ex.printStackTrace(System.out);
         }
+        throw new InvalidObjectException("Object fail");
     }
+//    @Override
+//    public void writeObject(ObjectOutputStream stream) {
+//        try {
+//            stream.defaultWriteObject();
+//            System.out.println("Записано");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @Override
+//    public void readObject(ObjectInputStream stream) {
+//        try {
+//            stream.defaultReadObject();
+//            System.out.println("Загружено");
+//        } catch (IOException | ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 
     //    public void addChild(String name, String surname) {

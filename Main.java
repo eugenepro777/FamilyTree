@@ -35,13 +35,24 @@ public class Main {
         human5.addChild(human6); human5.addChild(human7);
         System.out.println("the tree is recorded " + family1.getInfo());
 
-        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tree_out.txt"));
-        outputStream.writeObject(family1);
-        outputStream.close();
+        FileHandler handler = new FileHandler();
+        handler.save(family1);
 
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tree_out.txt"));
-        family1 = (FamilyTree) inputStream.readObject();
-        System.out.println("the tree is read " + family1.getInfo());
+        FamilyTree family3 = (FamilyTree) handler.load();
+        System.out.println(family3.getInfo());
+
+
+//
+//        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tree_out.txt"));
+//        outputStream.writeObject(family1);
+//        outputStream.close();
+//        save(family1, "tree_out2.txt");
+
+
+
+//        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tree_out.txt"));
+//        family1 = (FamilyTree) inputStream.readObject();
+//        System.out.println("the tree is read " + family1.getInfo());
 
 
         //System.out.println(human1.getChild());
