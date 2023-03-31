@@ -1,7 +1,9 @@
 package FamilyTree;
 
+import java.io.*;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         FamilyTree family1 = new FamilyTree();
 
@@ -18,6 +20,7 @@ public class Main {
 
 
         FamilyTree family2 = new FamilyTree();
+
         Human human4 = new Human("Петр", "Иванов", Gender.Male, "01.11.1987");
         Human human5 = new Human("Ирина", "Иванова", Gender.Female, "21.01.1991");
         Human human6 = new Human("Семен", "Иванов", Gender.Male, "10.01.2016");
@@ -30,15 +33,23 @@ public class Main {
         human6.setMother(human5); human7.setMother(human5);
         human4.addChild(human6); human4.addChild(human7);
         human5.addChild(human6); human5.addChild(human7);
+        System.out.println("the tree is recorded " + family1.getInfo());
+
+        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tree_out.txt"));
+        outputStream.writeObject(family1);
+        outputStream.close();
+
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tree_out.txt"));
+        family1 = (FamilyTree) inputStream.readObject();
+        System.out.println("the tree is read " + family1.getInfo());
 
 
-        System.out.println(human1.getChild());
-        System.out.println(human2.getChild());
-        System.out.println(human4.getChild());
-        System.out.println(human5.getChild());
-
-        System.out.println(family1.getInfo());
-        System.out.println(family2.getInfo());
+        //System.out.println(human1.getChild());
+//        System.out.println(human2.getChild());
+//        System.out.println(human4.getChild());
+//        System.out.println(human5.getChild());
+//
+//        System.out.println(family2.getInfo());
 
 
 

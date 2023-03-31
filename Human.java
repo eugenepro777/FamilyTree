@@ -1,5 +1,8 @@
 package FamilyTree;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -7,7 +10,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Human implements Serializable {
+public class Human implements Writable {
     private String name;
     private String surname;
     private String dateBirth;
@@ -47,9 +50,9 @@ public class Human implements Serializable {
     }
 
     public Human() {
-        this.name = "unknow";
-        this.surname = "unknow";
-        this.dateBirth = "unknow";
+        this.name = "unknown";
+        this.surname = "unknown";
+        this.dateBirth = "unknown";
     }
 
     public String getName() {
@@ -201,6 +204,18 @@ public class Human implements Serializable {
 
     }
 
+    public void setLifeCompanion(Human lifeCompanion) {
+        if (!this.hasConnect(FamilyConnect.Spouse)) {
+            lifeCompanion.setChildList(this.getChildList());
+            this.lifeCompanion = lifeCompanion;
+            if (!this.getLifeCompanion().hasConnect(FamilyConnect.Spouse)){
+                lifeCompanion.setLifeCompanion(this);
+            }
+        } else {
+            throw new IllegalArgumentException("Супруг(а) уже есть");
+        }
+    }
+
     public boolean hasConnect(FamilyConnect connect) {
         switch (connect) {
             case Father -> {
@@ -209,7 +224,7 @@ public class Human implements Serializable {
             case Mother -> {
                 return this.getMother() != null;
             }
-            case Husband, Wife -> {
+            case Spouse -> {
                 return this.getLifeCompanion() != null;
             }
             case Parents -> {
@@ -228,7 +243,15 @@ public class Human implements Serializable {
         return false;
     }
 
+    public void addConnect(FamilyConnect connect, Human human) {
+        switch (connect) {
+            case Father -> this.setFather(human);
+            case Mother -> this.setMother(human);
+            case Children -> this.addChild(human);
+            case Spouse -> this.setLifeCompanion(human);
 
+        }
+    }
 
     //не хватает метода addChild - добавил
     public void addChild(Human child) {
@@ -245,7 +268,7 @@ public class Human implements Serializable {
         return child.toString();
     }
 
-    public int getAge(String dateBirth) {
+    public int getAge() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
         LocalDate currentDate = LocalDate.now();
         LocalDate date = LocalDate.parse(dateBirth, formatter);
@@ -257,16 +280,37 @@ public class Human implements Serializable {
     public String toString() {
         return this.name +  " " + this.surname + " " +
                 "Пол: " + gender.name() + " " +
-                "Возраст: " + getAge(dateBirth) + " лет " + "\n" + "Отец: " + father;
+                "Возраст: " + getAge() + " лет " + "\n" + "Отец: " + father;
     }
 // new methods
     public Human getMother() {
-        return this.mother;
+        return mother;
     }
 
     public Human getFather() {
         return father;
     }
+
+    @Override
+    public void writeObject(ObjectOutputStream stream) {
+        try {
+            stream.defaultWriteObject();
+            System.out.println("Записано");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void readObject(ObjectInputStream stream) {
+        try {
+            stream.defaultReadObject();
+            System.out.println("Загружено");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     //    public void addChild(String name, String surname) {
 //        Human child = new Human(name, surname);
