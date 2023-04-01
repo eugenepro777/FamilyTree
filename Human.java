@@ -277,8 +277,8 @@ public class Human implements Writable {
     @Override
     public String toString() {
         return this.name +  " " + this.surname + " " +
-                "Пол: " + gender.name() + " " +
-                "Возраст: " + getAge() + " лет " + "\n" + "Отец: " + father;
+                "Пол: " + getGender() + " " +
+                "Возраст: " + getAge() + " лет " + "\n" + "Отец: " + getFather();
     }
 // new methods
     public Human getMother() {
