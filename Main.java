@@ -34,8 +34,6 @@ public class Main {
 //        outputStream.close();
 //        save(family1, "tree_out2.txt");
 
-
-
 //        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tree_out.txt"));
 //        family1 = (FamilyTree) inputStream.readObject();
 //        System.out.println("the tree is read " + family1.getInfo());
