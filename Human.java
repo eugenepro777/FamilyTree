@@ -55,6 +55,19 @@ public class Human implements Writable {
         this.childList = new ArrayList<>();
     }
 
+    public Human(int id, String name, String surname, Gender gender, String dateBirth) {
+        this.name = name;
+        this.surname = surname;
+        this.dateBirth = dateBirth;
+        this.gender = gender;
+        this.id = id;
+
+        this.father = null;
+        this.mother = null;
+        this.maidenName = "";
+        this.childList = new ArrayList<>();
+    }
+
 
     public Human(String name, String surname) {
         this.name = name;
