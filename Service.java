@@ -29,6 +29,6 @@ public class Service {
     }
 
     public void sortByNumChild () {
-        tree.getHumanList().sort(new HumanCompareByNumberChild());
+        tree.getHumanList().sort(new HumanComparatorByNumberChild());
     }
 }

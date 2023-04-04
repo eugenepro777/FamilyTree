@@ -8,7 +8,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Human implements Writable {
+public class Human implements Serializable {
 
     private  int id;
     private String name;
@@ -96,8 +96,11 @@ public class Human implements Writable {
         return dateBirth;
     }
 
+//    public List<Human> getChildList() {
+//        return childList = new ArrayList<>();
+//    }
     public List<Human> getChildList() {
-        return childList = new ArrayList<>();
+        return childList;
     }
 
 
@@ -179,6 +182,10 @@ public class Human implements Writable {
 
 
 // new methods
+
+    public int getNumChildren() {
+        return childList.size();
+    }
 
     public int numChildren() {
         return getChildList().size();
@@ -393,9 +400,8 @@ public class Human implements Writable {
 
 
     public String getInfo() {
-        System.out.println("*".repeat(30));
-        StringBuilder human = new StringBuilder();
-        human.append(name).append(" ")
+        StringBuilder builder = new StringBuilder();
+        builder.append(name).append(" ")
                 .append(surname).append(", ")
                 .append(getGender()).append(", ")
                 .append(getAge()).append(" лет, ")
@@ -403,31 +409,33 @@ public class Human implements Writable {
                 .append(getMother()).append(", ")
                 .append(getChildrenInfo());
 
-        return human.toString();
+        return builder.toString();
     }
 
-    @Override
-    public void save(Writable serializable) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream("out.txt");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(serializable);
-        }
-        catch (IIOException ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
 
-    @Override
-    public Writable load() throws ClassNotFoundException, InvalidObjectException {
-        try (FileInputStream fis = new FileInputStream("out.txt");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-            Writable object = (Human) ois.readObject();
-            return object;
-        } catch (IOException ex) {
-            ex.printStackTrace(System.out);
-        }
-        throw new InvalidObjectException("Object fail");
-    }
+
+//    @Override
+//    public void save(Writable serializable) throws IOException {
+//        try (FileOutputStream fos = new FileOutputStream("out.txt");
+//             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+//            oos.writeObject(serializable);
+//        }
+//        catch (IIOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//    }
+//
+//    @Override
+//    public Writable load() throws ClassNotFoundException, InvalidObjectException {
+//        try (FileInputStream fis = new FileInputStream("out.txt");
+//             ObjectInputStream ois = new ObjectInputStream(fis)) {
+//            Writable object = (Human) ois.readObject();
+//            return object;
+//        } catch (IOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//        throw new InvalidObjectException("Object fail");
+//    }
 
     @Override
     public boolean equals(Object obj) {

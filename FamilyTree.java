@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Writable, Iterable<Human> {
+public class FamilyTree implements Serializable, Iterable<Human> {
     private List<Human> humanList;
 
 //    public void save(FileHandler fileHandler) {
@@ -50,10 +50,9 @@ public class FamilyTree implements Writable, Iterable<Human> {
     }
 
     public String getInfo() {
-        System.out.println("*".repeat(30));
         StringBuilder tree = new StringBuilder();
-        tree.append("В семье ").append(humanList.size())
-                .append(" человека").append(" \n");
+        tree.append("В дереве ").append(humanList.size())
+                .append(" человек(а)").append(" \n");
         for (Human human: this.humanList) {
             tree.append(human.getInfo() + "\n");
         }
@@ -167,28 +166,28 @@ public class FamilyTree implements Writable, Iterable<Human> {
     }
 
 
-    @Override
-    public void save(Writable serializable) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream("out.txt");
-             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(serializable);
-        }
-        catch (IIOException ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
-
-    @Override
-    public Writable load() throws ClassNotFoundException, InvalidObjectException {
-        try (FileInputStream fis = new FileInputStream("out.txt");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-            Writable object = (FamilyTree) ois.readObject();
-            return object;
-        } catch (IOException ex) {
-            ex.printStackTrace(System.out);
-        }
-        throw new InvalidObjectException("Object fail");
-    }
+//    @Override
+//    public void save(Writable serializable) throws IOException {
+//        try (FileOutputStream fos = new FileOutputStream("out.txt");
+//             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+//            oos.writeObject(serializable);
+//        }
+//        catch (IIOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//    }
+//
+//    @Override
+//    public Writable load() throws ClassNotFoundException, InvalidObjectException {
+//        try (FileInputStream fis = new FileInputStream("out.txt");
+//             ObjectInputStream ois = new ObjectInputStream(fis)) {
+//            Writable object = (FamilyTree) ois.readObject();
+//            return object;
+//        } catch (IOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//        throw new InvalidObjectException("Object fail");
+//    }
 
     // new methods
 
