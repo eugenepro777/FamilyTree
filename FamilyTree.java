@@ -3,9 +3,10 @@ package FamilyTree;
 import javax.imageio.IIOException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Writable {
+public class FamilyTree implements Writable, Iterable<Human> {
     private List<Human> humanList;
 
 //    public void save(FileHandler fileHandler) {
@@ -206,6 +207,11 @@ public class FamilyTree implements Writable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Iterator<Human> iterator() {
+        return new HumanIterator(humanList);
     }
 
 

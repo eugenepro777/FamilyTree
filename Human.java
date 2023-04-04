@@ -9,11 +9,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Human implements Writable {
+
+    private  int id;
     private String name;
     private String surname;
     private String dateBirth;
 
-    //Не забываем про инкапсуляцию. Поля почти всегда private - сделал
     private Gender gender;
     private Human father;
     private Human mother;
@@ -37,6 +38,19 @@ public class Human implements Writable {
         this.father = null;
         this.mother = null;
         this.lifeCompanion = null;
+        this.maidenName = "";
+        this.childList = new ArrayList<>();
+    }
+
+    public Human(int id, String name, String surname, Gender gender, String dateBirth, Human father, Human mother) {
+        this.name = name;
+        this.surname = surname;
+        this.dateBirth = dateBirth;
+        this.gender = gender;
+        //this.id = id;
+
+        this.father = father;
+        this.mother = mother;
         this.maidenName = "";
         this.childList = new ArrayList<>();
     }
@@ -413,6 +427,15 @@ public class Human implements Writable {
         Human human = (Human) obj;
         return human.getName().equals(getName());
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     //    @Override
 //    public void writeObject(ObjectOutputStream stream) {
