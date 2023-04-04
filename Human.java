@@ -45,12 +45,16 @@ public class Human implements Writable {
     public Human(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        this.father = null;
+        this.mother = null;
     }
 
     public Human() {
         this.name = "unknown";
         this.surname = "unknown";
         this.dateBirth = "unknown";
+        this.father = null;
+        this.mother = null;
     }
 
     public String getName() {
@@ -69,9 +73,6 @@ public class Human implements Writable {
         return childList = new ArrayList<>();
     }
 
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 
     public void setName(String name) {
         if (name.isEmpty()) {
@@ -80,11 +81,6 @@ public class Human implements Writable {
             this.name = name;
         }
     }
-
-//    public void setSurname(String surname) {
-//        this.surname = surname;
-//    }
-
 
     public void setSurname(String surname) {
         if (surname.isEmpty()) {
@@ -128,6 +124,16 @@ public class Human implements Writable {
             throw new IllegalArgumentException("Отец уже есть");
         }
     }
+
+//    public void setFatherV2(Human father) {
+//        if (!father.getChildList().contains(this)) {
+//            father.getChildList().add(this);
+//        }
+//        this.father = father;
+//        } else {
+//        throw new IllegalArgumentException("Отец уже есть");
+//        }
+//    }
 
 //    public void setMother(Human mother) {
 //        this.mother = mother;
@@ -251,20 +257,31 @@ public class Human implements Writable {
         }
     }
 
-    //не хватает метода addChild - добавил
     public void addChild(Human child) {
-        childList = new ArrayList<>();
-        this.childList.add(child);
+        if (!childList.contains(child)) {
+        childList.add(child);
+        } else  {
+            System.out.println("Ребенок уже есть в списке");
+        }
+        //childList = new ArrayList<>();
     }
 
-    public String getChild() {
-        System.out.println("*".repeat(30));
-        StringBuilder child = new StringBuilder(getName() + " " + getSurname() + " дети: \n");
-        for (Human human: this.childList) {
-            child.append(human + "\n");
+    public boolean addChilds(Human child) {
+        if(!childList.contains(child)) {
+            childList.add(child);
+            return true;
         }
-        return child.toString();
+        return false;
     }
+
+//    public String getChild() {
+//        System.out.println("*".repeat(30));
+//        StringBuilder child = new StringBuilder(getName() + " " + getSurname() + " дети: \n");
+//        for (Human human: this.childList) {
+//            child.append(human + "\n");
+//        }
+//        return child.toString();
+//    }
 
     public int getAge() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
@@ -274,19 +291,92 @@ public class Human implements Writable {
 
     }
 
+
     @Override
     public String toString() {
         return this.name +  " " + this.surname + " " +
                 "Пол: " + getGender() + " " +
-                "Возраст: " + getAge() + " лет " + "\n" + "Отец: " + getFather();
+                "Возраст: " + getAge() + " лет ";
     }
-// new methods
+
+//    @Override
+//    public String toString() {
+//        return this.name +  " " + this.surname + " " +
+//                "Пол: " + getGender() + " " +
+//                "Возраст: " + getAge() + " лет " + "\n" + "Отец: " + getFather() + "Мать: " + getMother();
+//    }
+
     public Human getMother() {
         return mother;
     }
 
     public Human getFather() {
         return father;
+    }
+
+    // new methods
+    public String getFatherInfo() {
+        String res = "Отец: ";
+        if (father != null) {
+            res += father.getName();
+        } else {
+            res += "неизвестен";
+        }
+        return res;
+    }
+
+    public String getMotherInfo() {
+        String res = "Мать: ";
+        if (mother != null) {
+            res += mother.getName();
+        } else {
+            res += "неизвестна";
+        }
+        return res;
+    }
+
+    public String getChildrenInfo() {
+        StringBuilder childs = new StringBuilder();
+        childs.append("дети: ");
+        if (childList.size() != 0) {
+            childs.append(childList.get(0).getName());
+            for (int i = 1; i < childList.size(); i++) {
+                childs.append(", ");
+                childs.append(childList.get(i).getName());
+            }
+        } else {
+            childs.append("без детей");
+        }
+        return childList.toString();
+    }
+
+//    public String getChild() {
+//        StringBuilder child = new StringBuilder();
+//        child.append("\nдети: ");
+//        if (childList.size() != 0){
+//            child.append(childList.get(0).getName());
+//            for (Human human: childList) {
+//                child.append(human).append("\n");
+//            }
+//        } else {
+//            child.append("без детей");
+//        }
+//        return child.toString();
+//    }
+
+
+    public String getInfo() {
+        System.out.println("*".repeat(30));
+        StringBuilder human = new StringBuilder();
+        human.append(name).append(" ")
+                .append(surname).append(", ")
+                .append(getGender()).append(", ")
+                .append(getAge()).append(" лет, ")
+                .append(getFather()).append(", ")
+                .append(getMother()).append(", ")
+                .append(getChildrenInfo());
+
+        return human.toString();
     }
 
     @Override
@@ -311,7 +401,20 @@ public class Human implements Writable {
         }
         throw new InvalidObjectException("Object fail");
     }
-//    @Override
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Human)) {
+            return false;
+        }
+        Human human = (Human) obj;
+        return human.getName().equals(getName());
+    }
+
+    //    @Override
 //    public void writeObject(ObjectOutputStream stream) {
 //        try {
 //            stream.defaultWriteObject();

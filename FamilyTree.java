@@ -23,6 +23,8 @@ public class FamilyTree implements Writable {
         this.humanList = new ArrayList<>();
     }
 
+
+
     public Human getByName(String name) {
         for (Human human :
                 humanList) {
@@ -48,9 +50,11 @@ public class FamilyTree implements Writable {
 
     public String getInfo() {
         System.out.println("*".repeat(30));
-        StringBuilder tree = new StringBuilder("Семья: \n");
+        StringBuilder tree = new StringBuilder();
+        tree.append("В семье ").append(humanList.size())
+                .append(" человека").append(" \n");
         for (Human human: this.humanList) {
-            tree.append(human + "\n");
+            tree.append(human.getInfo() + "\n");
         }
         return tree.toString();
     }
@@ -136,7 +140,6 @@ public class FamilyTree implements Writable {
     public FamilyTree loadTree() throws InvalidObjectException {
         File file = new File("//tree.txt");
         ObjectInputStream ois = null;
-        //FamilyTree tree = null;
         try {
             FileInputStream fis = new FileInputStream(file);
             if (fis != null) {
@@ -185,4 +188,46 @@ public class FamilyTree implements Writable {
         }
         throw new InvalidObjectException("Object fail");
     }
+
+    // new methods
+
+    public boolean add(Human human) {
+        if (human == null) {
+            return false;
+        }
+        if (!humanList.contains(human)) {
+            humanList.add(human);
+            if (human.getFather() != null) {
+                human.getFather().addChild(human);
+            }
+            if (human.getMother() != null) {
+                human.getMother().addChild(human);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    //    public void save(FamilyTree tree) throws IOException {
+//        try (FileOutputStream fos = new FileOutputStream("out.txt");
+//             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+//            oos.writeObject(tree);
+//        }
+//        catch (IIOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//    }
+//
+//    @Override
+//    public FamilyTree load() throws ClassNotFoundException, InvalidObjectException {
+//        try (FileInputStream fis = new FileInputStream("out.txt");
+//             ObjectInputStream ois = new ObjectInputStream(fis)) {
+//            FamilyTree object = (FamilyTree) ois.readObject();
+//            return object;
+//        } catch (IOException ex) {
+//            ex.printStackTrace(System.out);
+//        }
+//        throw new InvalidObjectException("Object fail");
+//    }
 }
